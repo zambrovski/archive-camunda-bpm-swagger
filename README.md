@@ -1,6 +1,10 @@
 # Camunda BPM Swagger
 
+[![Travis CI](https://travis-ci.org/camunda/camunda-bpm-swagger.svg?branch=master)](https://travis-ci.org/camunda/camunda-bpm-swagger)
+
+
 Swagger Support for Camunda BPM REST API. 
+
 
 **Features:**
 
