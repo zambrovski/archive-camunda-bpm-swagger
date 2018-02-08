@@ -16,8 +16,8 @@
 
   <properties>
     <springfox.version>2.7.0</springfox.version>
-    <spring-boot.version>1.5.6.RELEASE</spring-boot.version>
-    <camunda-spring-boot.version>2.2.0</camunda-spring-boot.version>
+    <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
+    <camunda-spring-boot.version>2.3.0</camunda-spring-boot.version>
   </properties>
 
   <dependencyManagement>
@@ -29,13 +29,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>org.camunda.bpm.extension.springboot</groupId>
-        <artifactId>camunda-bpm-spring-boot-starter-bom</artifactId>
-        <version>${camunda-spring-boot.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -46,15 +39,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.camunda.bpm.extension.springboot</groupId>
+      <groupId>org.camunda.bpm.springboot</groupId>
       <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+      <version>${camunda-spring-boot.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
-
 
     <dependency>
       <groupId>org.webjars</groupId>

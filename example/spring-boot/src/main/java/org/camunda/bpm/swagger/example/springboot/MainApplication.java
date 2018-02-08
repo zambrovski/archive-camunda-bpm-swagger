@@ -18,7 +18,7 @@ public class MainApplication {
     SpringApplication.run(MainApplication.class, args);
   }
 
-  //@Bean
+  @Bean
   WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
     return new WebMvcConfigurerAdapter() {
       @Override
