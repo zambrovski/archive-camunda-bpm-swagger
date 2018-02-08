@@ -10,7 +10,7 @@ Swagger Support for Camunda BPM REST API.
 
 * Provides a Swagger OpenSpec API documentation of Camunda BPM Engine REST.
 * Provides Swagger UI archive which can be used to explore the API.
-* Supports Camunda BPM Engine 7.7
+* Supports Camunda BPM Engine 7.8
 
 ## Installation and Usage
 
@@ -21,7 +21,7 @@ In order to use the Swagger in context of a Camunda SpringBoot application, just
     <dependency>
       <groupId>org.camunda.bpm.extension.swagger</groupId>
       <artifactId>camunda-bpm-swagger-json</artifactId>
-      <version>7.7.0</version>
+      <version>7.8.0</version>
     </dependency>
     <dependency>
       <groupId>org.webjars</groupId>
@@ -60,7 +60,7 @@ The versioning of this artifact is following the version of Camunda BPM (especia
 Swagger specification of the versioned Camunda REST API. For this reason, we start with version 7.7.0. 
 
 
-### 7.7.0
+### 7.8.0
 
 * Initial contribution
 
