@@ -69,6 +69,9 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <camundaDocsBase>https://docs.camunda.org/manual/7.8/reference/rest/</camundaDocsBase>
+        </configuration>
       </plugin>
     </plugins>
   </build>
