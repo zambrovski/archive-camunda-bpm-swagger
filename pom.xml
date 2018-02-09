@@ -12,7 +12,7 @@
 
   <groupId>org.camunda.bpm.extension.swagger.project</groupId>
   <artifactId>camunda-bpm-swagger-root</artifactId>
-  <version>7.8.0</version>
+  <version>7.9.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Camunda BPM Swagger</name>
 
@@ -77,7 +77,7 @@
     <connection>scm:git:git@github.com:camunda/camunda-bpm-swagger.git</connection>
     <url>scm:git:git@github.com:camunda/camunda-bpm-swagger.git</url>
     <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-swagger.git</developerConnection>
-    <tag>7.8.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
