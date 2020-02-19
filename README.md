@@ -1,6 +1,14 @@
+# Unmaintained
+
+This was a proof of concept, based on camunda 7.8 ... it is currently not maintained, though the idea of havin a swagger/openAPI secription and client is still tempting.
+
+
+
 # Camunda BPM Swagger
 
 [![Travis CI](https://travis-ci.org/camunda/camunda-bpm-swagger.svg?branch=master)](https://travis-ci.org/camunda/camunda-bpm-swagger)
+
+
 
 
 Swagger Support for Camunda BPM REST API. 
