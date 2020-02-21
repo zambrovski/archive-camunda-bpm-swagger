@@ -4,7 +4,7 @@
   <parent>
     <artifactId>camunda-bpm-swagger-root</artifactId>
     <groupId>org.camunda.bpm.extension.swagger.project</groupId>
-    <version>7.9.0-SNAPSHOT</version>
+    <version>7.12.0-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
@@ -20,34 +20,34 @@
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
-      <version>1.17</version>
+      <version>1.25</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.5</version>
+      <version>3.9</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.25</version>
+      <version>1.7.30</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.25</version>
+      <version>1.7.30</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.8.0</version>
+      <version>3.15.0</version>
       <scope>test</scope>
     </dependency>
 
@@ -68,7 +68,7 @@
           </execution>
         </executions>
         <configuration>
-          <camundaDocsBase>https://docs.camunda.org/manual/7.8/reference/rest/</camundaDocsBase>
+          <camundaDocsBase>https://docs.camunda.org/manual/7.12/reference/rest/</camundaDocsBase>
         </configuration>
       </plugin>
     </plugins>

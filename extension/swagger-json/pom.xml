@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.camunda.bpm.extension.swagger.project</groupId>
     <artifactId>camunda-bpm-swagger-root</artifactId>
-    <version>7.9.0-SNAPSHOT</version>
+    <version>7.12.0-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 

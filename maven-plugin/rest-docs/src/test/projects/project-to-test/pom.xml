@@ -21,7 +21,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -44,7 +44,7 @@
         <configuration>
           <markdownDir>./src/test/resources/rest</markdownDir>
           <yamlFile>./target/test-classes/camunda-rest-docs.yaml</yamlFile>
-          <camundaDocsBase>https://docs.camunda.org/manual/7.7/reference/rest/</camundaDocsBase>
+          <camundaDocsBase>https://docs.camunda.org/manual/7.12/reference/rest/</camundaDocsBase>
         </configuration>
       </plugin>
     </plugins>
