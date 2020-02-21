@@ -14,7 +14,7 @@ menu:
 
 
 Queries for the number of historic job logs that fulfill the given parameters.
-Takes the same parameters as the [Get Job Logs]({{< relref "reference/rest/history/job-log/get-job-log-query.md" >}}) method.
+Takes the same parameters as the [Get Job Logs]({{< ref "/reference/rest/history/job-log/get-job-log-query.md" >}}) method.
 
 
 # Method
@@ -49,15 +49,19 @@ GET `/history/job-log/count`
   </tr>
   <tr>
     <td>jobDefinitionType</td>
-    <td>Filter by job definition type. See the <a href="{{< relref "user-guide/process-engine/the-job-executor.md#job-creation" >}}">User Guide</a> for more information about job definition types.</td>
+    <td>Filter by job definition type. See the <a href="{{< ref "/user-guide/process-engine/the-job-executor.md#job-creation" >}}">User Guide</a> for more information about job definition types.</td>
   </tr>
   <tr>
     <td>jobDefinitionConfiguration</td>
-    <td>Filter by job definition context.</td>
+    <td>Filter by job definition configuration.</td>
   </tr>
   <tr>
     <td>activityIdIn</td>
     <td>Only include historic job logs which belong to one of the passed activity ids.</td>
+  </tr>
+  <tr>
+    <td>failedActivityIdIn</td>
+    <td>Only include historic job logs which belong to failures of one of the passed activity ids.</td>
   </tr>
   <tr>
     <td>executionIdIn</td>
@@ -82,6 +86,15 @@ GET `/history/job-log/count`
   <tr>
     <td>tenantIdIn</td>
     <td>Only include historic job log entries which belong to one of the passed and comma-separated tenant ids.</td>
+  </tr>
+  <tr>
+    <td>withoutTenantId</td>
+    <td>Only include historic job log entries that belong to no tenant. Value may only be 
+    <code>true</code>, as <code>false</code> is the default behavior.</td>
+  </tr>
+  <tr>
+    <td>hostname</td>
+    <td>Filter by hostname.</td>
   </tr>
   <tr>
     <td>jobPriorityLowerThanOrEquals</td>

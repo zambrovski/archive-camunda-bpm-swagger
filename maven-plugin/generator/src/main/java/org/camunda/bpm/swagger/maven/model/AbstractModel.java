@@ -1,13 +1,11 @@
 package org.camunda.bpm.swagger.maven.model;
 
-import java.io.File;
-
-import org.camunda.bpm.swagger.maven.generator.StringHelper;
-
 import com.helger.jcodemodel.JCodeModel;
-
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.camunda.bpm.swagger.maven.generator.StringHelper;
+
+import java.io.File;
 
 public abstract class AbstractModel {
 
@@ -40,6 +38,9 @@ public abstract class AbstractModel {
 
   public String getName() {
     final String[] n = StringHelper.splitCamelCase(getSimpleName()).split(" ");
+    if(n.length < 3) {
+      throw new IllegalStateException(String.join(" ", n));
+    }
     return n[0] + " " + n[2];
   }
 

@@ -15,7 +15,7 @@ menu:
 
 Queries for the external tasks that fulfill given parameters.
 Parameters may be static as well as dynamic runtime properties of executions.
-The size of the result set can be retrieved by using the [Get External Task Count]({{< relref "reference/rest/external-task/get-query-count.md" >}}) method.
+The size of the result set can be retrieved by using the [Get External Task Count]({{< ref "/reference/rest/external-task/get-query-count.md" >}}) method.
 
 
 # Method
@@ -62,11 +62,11 @@ GET `/external-task`
   </tr>
   <tr>
     <td>lockExpirationAfter</td>
-    <td>Restrict to external tasks that have a lock that expires after a given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to external tasks that have a lock that expires after a given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>lockExpirationBefore</td>
-    <td>Restrict to external tasks that have a lock that expires before a given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to external tasks that have a lock that expires before a given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>activityId</td>
@@ -129,6 +129,7 @@ GET `/external-task`
   </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Result
 
@@ -154,7 +155,14 @@ Each external task object has the following properties:
   <tr>
     <td>errorMessage</td>
     <td>String</td>
-    <td>The error message that was supplied when the last failure of this task was reported.</td>
+    <td>The full error message submitted with the latest reported failure executing this task;
+    <br/><code>null</code> if no failure was reported previously or if no error message was submitted</td>
+  </tr>
+  <tr>
+    <td>errorDetails</td>
+    <td>String</td>
+    <td>The error details submitted with the latest reported failure executing this task.
+    <br/><code>null</code> if no failure was reported previously or if no error details was submitted</td>
   </tr>
   <tr>
     <td>executionId</td>
@@ -204,7 +212,7 @@ Each external task object has the following properties:
   <tr>
     <td>workerId</td>
     <td>String</td>
-    <td>The id of the worker that posesses or posessed the most recent lock.</td>
+    <td>The id of the worker that possess or possessed the most recent lock.</td>
   </tr>
   <tr>
     <td>topicName</td>
@@ -215,7 +223,12 @@ Each external task object has the following properties:
     <td>priority</td>
     <td>Number</td>
     <td>The priority of the external task.</td>
-  </tr>  
+  </tr>
+  <tr>
+    <td>businessKey</td>
+    <td>String</td>
+    <td>The business key of the process instance the external task belongs to.</td>
+  </tr>
 </table>
 
 # Response Codes
@@ -234,7 +247,7 @@ Each external task object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -253,9 +266,10 @@ Status 200.
       "activityId": "anActivityId",
       "activityInstanceId": "anActivityInstanceId",
       "errorMessage": "anErrorMessage",
+      "errorDetails": "anErrorDetails",
       "executionId": "anExecutionId",
       "id": "anExternalTaskId",
-      "lockExpirationTime": "2015-10-06T16:34:42",
+      "lockExpirationTime": "2015-10-06T16:34:42.000+0200",
       "processDefinitionId": "aProcessDefinitionId",
       "processDefinitionKey": "aProcessDefinitionKey",
       "processInstanceId": "aProcessInstanceId",
@@ -264,15 +278,17 @@ Status 200.
       "suspended": false,
       "workerId": "aWorkerId",
       "topicName": "aTopic",
-	  "priority": 9
+      "priority": 9,
+      "businessKey": "aBusinessKey"
     },
     {
       "activityId": "anotherActivityId",
       "activityInstanceId": "anotherActivityInstanceId",
       "errorMessage": "anotherErrorMessage",
+      "errorDetails": "anotherErrorDetails",
       "executionId": "anotherExecutionId",
       "id": "anotherExternalTaskId",
-      "lockExpirationTime": "2015-10-06T16:34:42",
+      "lockExpirationTime": "2015-10-06T16:34:42.000+0200",
       "processDefinitionId": "anotherProcessDefinitionId",
       "processDefinitionKey": "anotherProcessDefinitionKey",
       "processInstanceId": "anotherProcessInstanceId",
@@ -281,5 +297,6 @@ Status 200.
       "suspended": false,
       "workerId": "aWorkerId",
       "topicName": "aTopic",
-	  "priority": 3
+      "priority": 3,
+      "businessKey": "aBusinessKey"
     }]

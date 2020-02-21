@@ -1,15 +1,16 @@
 package org.camunda.bpm.swagger.maven.interpreter;
 
+import com.google.common.collect.Lists;
+import com.vladsch.flexmark.ast.*;
+import org.apache.maven.plugin.logging.Log;
+import org.camunda.bpm.swagger.maven.model.ParameterDescription;
+import org.camunda.bpm.swagger.maven.model.RestOperation;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
-import org.apache.maven.plugin.logging.Log;
-import org.camunda.bpm.swagger.maven.model.ParameterDescription;
-import org.camunda.bpm.swagger.maven.model.RestOperation;
-import com.google.common.collect.Lists;
-import com.vladsch.flexmark.ast.*;
 
 public class DocumentInterpreter {
 
@@ -36,6 +37,7 @@ public class DocumentInterpreter {
   }
 
   public List<RestOperation> interpret(final Map<String, Node> parsed, final String camundaDocURI) {
+    log.debug(camundaDocURI);
     final RestOperation.RestOperationBuilder builder = RestOperation.builder();
     Optional.of(camundaDocURI).ifPresent(builder::externalDocUrl);
     resolveSubDocument(DESCRIPTION, parsed).map(this::resolveDescription).ifPresent(builder::description);
@@ -92,10 +94,12 @@ public class DocumentInterpreter {
 
   private Optional<String> resolveExample(final Map<String, Node> parsed) {
     Optional<String> result = resolveSubDocument(EXAMPLE__RESPONSE, parsed).map(this::resolveResponse);
-    if (!result.isPresent())
+    if (!result.isPresent()) {
       result = resolveSubDocument(EXAMPLE_1__RESPONSE, parsed).map(this::resolveResponse);
-    if (!result.isPresent())
+    }
+    if (!result.isPresent()) {
       result = resolveSubDocument(EXAMPLE_2__RESPONSE, parsed).map(this::resolveResponse);
+    }
     return result;
   }
 

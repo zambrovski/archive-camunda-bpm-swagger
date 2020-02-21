@@ -81,13 +81,18 @@ class HtmlDocumentInterpreter {
     for (final Element tr : trs) {
       final Elements tds = tr.select("td");
       if (tds.size() >= 2) {
-        final ParameterDescription.ParameterDescriptionBuilder builder = ParameterDescription.builder();
-        Optional.ofNullable(nameIdx).map(tds::get).map(Element::text).ifPresent(builder::id);
-        Optional.ofNullable(descriptionIdx).map(tds::get).map(Element::text).ifPresent(builder::description);
-        Optional.ofNullable(typeIdx).map(tds::get).map(Element::text).ifPresent(builder::type);
-        Optional.ofNullable(requiredIdx).map(tds::get).map(Element::text).map(o -> o.equals("Yes")).ifPresent(builder::required);
-        final ParameterDescription parameterDescription = builder.build();
-        result.put(parameterDescription.getId(), parameterDescription);
+        try {
+          final ParameterDescription.ParameterDescriptionBuilder builder = ParameterDescription.builder();
+          Optional.ofNullable(nameIdx).map(tds::get).map(Element::text).ifPresent(builder::id);
+          Optional.ofNullable(descriptionIdx).map(tds::get).map(Element::text).ifPresent(builder::description);
+          Optional.ofNullable(typeIdx).map(tds::get).map(Element::text).ifPresent(builder::type);
+          Optional.ofNullable(requiredIdx).map(tds::get).map(Element::text).map(o -> o.equals("Yes")).ifPresent(builder::required);
+          final ParameterDescription parameterDescription = builder.build();
+          result.put(parameterDescription.getId(), parameterDescription);
+        } catch (final IndexOutOfBoundsException e) {
+          log.error("malformed html table found: "+ tds.toString());
+          throw e;
+        }
       }
     }
     return result;

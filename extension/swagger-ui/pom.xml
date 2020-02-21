@@ -16,7 +16,6 @@
   <properties>
     <swagger.version>1.5.16</swagger.version>
     <swagger-ui.version>3.1.4</swagger-ui.version>
-    <resteasy-jaxrs.version>2.3.5.Final</resteasy-jaxrs.version>
     <version.jersey2>2.25.1</version.jersey2>
   </properties>
 

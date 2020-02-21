@@ -39,12 +39,18 @@ GET `/metrics`
       <code>job-successful</code>,
       <code>job-failed</code>,
       <code>job-locked-exclusive</code>,
-      <code>executed-decision-elements</code>
+      <code>executed-decision-elements</code>,
+      <code>history-cleanup-removed-process-instances</code>,
+      <code>history-cleanup-removed-case-instances</code>,
+      <code>history-cleanup-removed-decision-instances</code>,
+      <code>history-cleanup-removed-batch-operations</code>
     </td>
   </tr>
   <tr>
     <td>reporter</td>
-    <td>The name of the reporter (host), on which the metrics was logged.</td>
+    <td>The name of the reporter (host), on which the metrics was logged. This will have value
+     provided by the [hostname configuration property]({{< ref "/reference/deployment-descriptors/tags/process-engine.md#hostname">}}).
+    </td>
   </tr>
   <tr>
     <td>startDate</td>
@@ -66,6 +72,10 @@ GET `/metrics`
     <td>interval</td>
     <td>The interval for which the metrics should be aggregated. Time unit is seconds. 
         Default: The interval is set to 15 minutes (900 seconds).</td>
+  </tr>
+  <tr>
+    <td>aggregateByReporter</td>
+    <td>Aggregate metrics by reporter.</td>
   </tr>
 </table>
 
@@ -92,7 +102,7 @@ A JSON array of aggregated metrics. Each aggregated metric has the following pro
   <tr>
     <td>reporter</td>
     <td>String</td>
-    <td>The reporter of the metric.</td>
+    <td>The reporter of the metric. `null` if the metrics are aggregated by reporter.</td>
   </tr>
   <tr>
     <td>value</td>
@@ -128,13 +138,13 @@ A JSON array of aggregated metrics. Each aggregated metric has the following pro
 
 ## Request
 
-GET `/metrics?name=activity-instance-end&startDate='1970-01-01 01:45:00'&endDate='1970-01-01 02:00:00'`
+GET `/metrics?name=activity-instance-end&startDate='1970-01-01T01:45:00.000+0200'&endDate='1970-01-01T02:00:00.000+0200'`
 
 ## Response
 
     [
       {
-        "timestamp":"1970-01-01T01:45:00",
+        "timestamp":"1970-01-01T01:45:00.000+0200",
         "name":"activity-instance-end",
         "reporter":"REPORTER",
         "value":23

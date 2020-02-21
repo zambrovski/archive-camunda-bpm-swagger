@@ -15,7 +15,7 @@ menu:
 
 
 Queries for the number of process instances that fulfill given parameters.
-Takes the same parameters as the [Get Instances]({{< relref "reference/rest/process-instance/get-query.md" >}}) method.
+Takes the same parameters as the [Get Instances]({{< ref "/reference/rest/process-instance/get-query.md" >}}) method.
 
 
 # Method
@@ -57,6 +57,14 @@ GET `/process-instance/count`
     <td>Filter by the key of the process definition the instances run on.</td>
   </tr>
   <tr>
+    <td>processDefinitionKeyIn</td>
+    <td>Filter by a comma-separated list of process definition keys. A process instance must have one of the given process definition keys.</td>
+  </tr>
+  <tr>
+    <td>processDefinitionKeyNotIn</td>
+    <td>Exclude instances by a comma-separated list of process definition keys. A process instance must not have one of the given process definition keys.</td>
+  </tr>
+  <tr>
     <td>deploymentId</td>
     <td>Filter by the deployment the id belongs to.</td>
   </tr>
@@ -90,7 +98,7 @@ GET `/process-instance/count`
   </tr>
   <tr>
     <td>incidentType</td>
-    <td>Filter by the incident type. See the <a href="{{< relref "user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
+    <td>Filter by the incident type. See the <a href="{{< ref "/user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
   </tr>
   <tr>
     <td>incidentMessage</td>
@@ -111,6 +119,14 @@ GET `/process-instance/count`
   <tr>
     <td>activityIdIn</td>
     <td>Filter by a comma-separated list of activity ids. A process instance must currently wait in a leaf activity with one of the given activity ids.</td>
+  </tr>
+  <tr>
+    <td>rootProcessInstances</td>
+    <td>Restrict the query to all process instances that are top level process instances.</td>
+  </tr>
+  <tr>
+    <td>processDefinitionWithoutTenantId</td>
+    <td>Only include process instances which process definition has no tenant id.</td>
   </tr>
   <tr>
     <td>variables</td>
@@ -163,7 +179,7 @@ A JSON object that contains the count as the only property.
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>, or if an invalid operator for variable comparison is used. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>, or if an invalid operator for variable comparison is used. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 

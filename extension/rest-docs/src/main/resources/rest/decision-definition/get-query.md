@@ -16,7 +16,7 @@ menu:
 Queries for decision definitions that fulfill given parameters. Parameters may be
 the properties of decision definitions, such as the name, key or version.  The
 size of the result set can be retrieved by using the [Get Decision Definition Count]({{<
-relref "reference/rest/decision-definition/get-query-count.md" >}}) method.
+ref "/reference/rest/decision-definition/get-query-count.md" >}}) method.
 
 
 # Method
@@ -110,9 +110,13 @@ GET `/decision-definition`
     <td>Include decision definitions which belong to no tenant. Can be used in combination with <code>tenantIdIn</code>. Value may only be <code>true</code>, as <code>false</code> is the default behavior.</td>
   </tr>
   <tr>
+    <td>versionTag</td>
+    <td>Filter by the version tag.</td>
+  </tr>
+  <tr>
     <td>sortBy</td>
     <td>Sort the results lexicographically by a given criterion. Valid values are
-    <code>category</code>, <code>key</code>, <code>id</code>, <code>name</code>, <code>version</code>, <code>deploymentId</code> and <code>tenantId</code>.
+    <code>category</code>, <code>decisionRequirementsDefinitionKey</code>, <code>key</code>, <code>id</code>, <code>name</code>, <code>version</code>, <code>deploymentId</code> and <code>tenantId</code>.
     Must be used in conjunction with the <code>sortOrder</code> parameter.</td>
   </tr>
   <tr>
@@ -193,9 +197,19 @@ Each decision definition object has the following properties:
     <td>The tenant id of the decision definition.</td>
   </tr>
   <tr>
+    <td>versionTag</td>
+    <td>String</td>
+    <td>The version tag of the decision or <i>null</i> when no version tag is set</td>
+  </tr>
+  <tr>
+    <td>versionTagLike</td>
+    <td>String</td>
+    <td>Filter by the version tag that the parameter is a substring of.</td>
+  </tr>
+  <tr>
     <td>historyTimeToLive</td>
     <td>Number</td>
-    <td>History time to live value of the decision definition. Is used within <a href="{{< relref "user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
+    <td>History time to live value of the decision definition. Is used within <a href="{{< ref "/user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
   </tr>
 </table>
 
@@ -218,7 +232,7 @@ Each decision definition object has the following properties:
     <td>application/json</td>
     <td>
       Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>.
-      See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.
+      See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.
     </td>
   </tr>
 </table>
@@ -245,6 +259,7 @@ GET `/decision-definition?key=dish-decision&sortBy=category&sortOrder=asc`
     "decisionRequirementsDefinitionId":"dish:1:c633c195-41b7-11e6-b0ef-00aa004d0001",
     "decisionRequirementsDefinitionKey":"dish",
     "tenantId": null,
+    "versionTag": null,
     "historyTimeToLive": 5
   }
 ]

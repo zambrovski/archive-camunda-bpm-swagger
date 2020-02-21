@@ -14,7 +14,7 @@ menu:
 
 
 Queries for the number of historic external task logs that fulfill the given parameters.
-This method takes the same message body as the [Get External Task Logs (POST)]({{< relref "reference/rest/history/external-task-log/post-external-task-log-query.md" >}}) method and therefore it is slightly more powerful than the [Get External Task Log Count]({{< relref "reference/rest/history/external-task-log/get-external-task-log-query-count.md" >}}) method.
+This method takes the same message body as the [Get External Task Logs (POST)]({{< ref "/reference/rest/history/external-task-log/post-external-task-log-query.md" >}}) method and therefore it is slightly more powerful than the [Get External Task Log Count]({{< ref "/reference/rest/history/external-task-log/get-external-task-log-query-count.md" >}}) method.
 
 
 # Method
@@ -84,6 +84,11 @@ A JSON object with the following properties:
     <td>Only include historic external task log entries which belong to one of the passed and comma-separated tenant ids.</td>
   </tr>
   <tr>
+    <td>withoutTenantId</td>
+    <td>Only include historic external task log entries that belong to no tenant. Value may only be 
+    <code>true</code>, as <code>false</code> is the default behavior.</td>
+  </tr>
+  <tr>
     <td>priorityLowerThanOrEquals</td>
     <td>Only include logs for which the associated external task had a priority lower than or equal to the given value. Value must be a valid <code>long</code> value.</td>
   </tr>
@@ -144,7 +149,7 @@ A JSON object that contains the count as the only property.
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 

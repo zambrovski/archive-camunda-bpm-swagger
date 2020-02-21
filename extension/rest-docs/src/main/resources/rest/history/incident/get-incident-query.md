@@ -14,7 +14,7 @@ menu:
 
 
 Queries for historic incidents that fulfill given parameters.
-The size of the result set can be retrieved by using the [Get Incident Count]({{< relref "reference/rest/history/incident/get-incident-query-count.md" >}}) method.
+The size of the result set can be retrieved by using the [Get Incident Count]({{< ref "/reference/rest/history/incident/get-incident-query-count.md" >}}) method.
 
 
 # Method
@@ -37,7 +37,7 @@ GET `/history/incident`
   </tr>
   <tr>
     <td>incidentType</td>
-    <td>Restricts to incidents that belong to the given incident type. See the <a href="{{< relref "user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
+    <td>Restricts to incidents that belong to the given incident type. See the <a href="{{< ref "/user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
   </tr>
   <tr>
     <td>incidentMessage</td>
@@ -60,6 +60,10 @@ GET `/history/incident`
     <td>Restricts to incidents that belong to an activity with the given id.</td>
   </tr>
   <tr>
+    <td>failedActivityId</td>
+    <td>Restricts to incidents that were created due to the failure of an activity with the given id.</td>
+  </tr>
+  <tr>
     <td>causeIncidentId</td>
     <td>Restricts to incidents that have the given incident id as cause incident.</td>
   </tr>
@@ -68,12 +72,17 @@ GET `/history/incident`
     <td>Restricts to incidents that have the given incident id as root cause incident.</td>
   </tr>
   <tr>
-    <td>context</td>
-    <td>Restricts to incidents that have the given parameter set as context.</td>
+    <td>configuration</td>
+    <td>Restricts to incidents that have the given parameter set as configuration.</td>
   </tr>
   <tr>
     <td>tenantIdIn</td>
     <td>Restricts to incidents that have one of the given comma-separated tenant ids.</td>
+  </tr>
+  <tr>
+    <td>withoutTenantId</td>
+    <td>Only include historic incidents that belong to no tenant. Value may only be 
+    <code>true</code>, as <code>false</code> is the default behavior.</td>
   </tr>
   <tr>
     <td>jobDefinitionIdIn</td>
@@ -94,7 +103,7 @@ GET `/history/incident`
   <tr>
     <td>sortBy</td>
     <td>Sort the results lexicographically by a given criterion. Valid values are
-    <code>incidentId</code>, <code>createTime</code>, <code>endTime</code>, <code>incidentType</code>, <code>executionId</code>, <code>activityId</code>, <code>processInstanceId</code>, <code>processDefinitionId</code>, <code>causeIncidentId</code>, <code>rootCauseIncidentId</code>, <code>context</code>, <code>tenantId</code> and <code>incidentState</code>.
+    <code>incidentId</code>, <code>incidentMessage</code>, <code>createTime</code>, <code>endTime</code>, <code>incidentType</code>, <code>executionId</code>, <code>activityId</code>, <code>processInstanceId</code>, <code>processDefinitionId</code>, <code>causeIncidentId</code>, <code>rootCauseIncidentId</code>, <code>configuration</code>, <code>tenantId</code> and <code>incidentState</code>.
     Must be used in conjunction with the <code>sortOrder</code> parameter.</td>
   </tr>
   <tr>
@@ -144,22 +153,27 @@ Each historic incident object has the following properties:
   <tr>
     <td>createTime</td>
     <td>String</td>
-    <td>The time this incident happened. Has the format <code>yyyy-MM-dd'T'HH:mm:ss</code>.</td>
+    <td>The time this incident happened. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
   </tr>
   <tr>
     <td>endTime</td>
     <td>String</td>
-    <td>The time this incident has been deleted or resolved. Has the format <code>yyyy-MM-dd'T'HH:mm:ss</code>.</td>
+    <td>The time this incident has been deleted or resolved. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
   </tr>
   <tr>
     <td>incidentType</td>
     <td>String</td>
-    <td>The type of incident, for example: <code>failedJobs</code> will be returned in case of an incident which identified a failed job during the execution of a process instance. See the <a href="{{< relref "user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
+    <td>The type of incident, for example: <code>failedJobs</code> will be returned in case of an incident which identified a failed job during the execution of a process instance. See the <a href="{{< ref "/user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
   </tr>
   <tr>
     <td>activityId</td>
     <td>String</td>
     <td>The id of the activity this incident is associated with.</td>
+  </tr>
+  <tr>
+    <td>failedActivityId</td>
+    <td>String</td>
+    <td>The id of the activity on which the last exception occurred.</td>
   </tr>
   <tr>
     <td>causeIncidentId</td>
@@ -172,7 +186,7 @@ Each historic incident object has the following properties:
     <td>The id of the associated root cause incident which has been triggered.</td>
   </tr>
   <tr>
-    <td>context</td>
+    <td>configuration</td>
     <td>String</td>
     <td>The payload of this incident.</td>
   </tr>
@@ -206,8 +220,19 @@ Each historic incident object has the following properties:
     <td>Boolean</td>
     <td>If true, this incident has been resolved.</td>
   </tr>
+  <tr>
+    <td>removalTime</td>
+    <td>String</td>
+    <td>The time after which the incident should be removed by the History Cleanup job. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
+  </tr>
+  <tr>
+    <td>rootProcessInstanceId</td>
+    <td>String</td>
+    <td>The process instance id of the root process instance that initiated the process containing this incident.</td>
+  </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Response Codes
 
@@ -225,7 +250,7 @@ Each historic incident object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -246,38 +271,44 @@ GET `/history/incident?processInstanceId=aProcInstId`
     "processDefinitionId": "aProcDefId",
     "processInstanceId": "aProcInstId",
     "executionId": "anExecutionId",
-    "createTime": "2014-03-01T08:00:00",
+    "createTime": "2014-03-01T08:00:00.000+0200",
     "endTime": null,
     "incidentType": "failedJob",
     "activityId": "serviceTask",
+    "failedActivityId": "serviceTask",
     "causeIncidentId": "aCauseIncidentId",
     "rootCauseIncidentId": "aRootCauseIncidentId",
-    "context": "aConfiguration",
+    "configuration": "aConfiguration",
     "incidentMessage": "anIncidentMessage",
     "tenantId": null,
     "jobDefinitionId": "aJobDefinitionId",
     "open": true,
     "deleted": false,
-    "resolved": false
+    "resolved": false,
+    "removalTime": null,
+    "rootProcessInstanceId": "aRootProcessInstanceId"
   },
   {
     "id": "anIncidentId",
     "processDefinitionId": "aProcDefId",
     "processInstanceId": "aProcInstId",
     "executionId": "anotherExecutionId",
-    "createTime": "2014-03-01T08:00:00",
-    "endTime": "2014-03-10T12:00:00",
+    "createTime": "2014-03-01T08:00:00.000+0200",
+    "endTime": "2014-03-10T12:00:00.000+0200",
     "incidentType": "customIncidentType",
     "activityId": "userTask",
+    "failedActivityId": "userTask",
     "causeIncidentId": "anotherCauseIncidentId",
     "rootCauseIncidentId": "anotherRootCauseIncidentId",
-    "context": "anotherConfiguration",
+    "configuration": "anotherConfiguration",
     "incidentMessage": "anotherIncidentMessage",
     "tenantId": null,
     "jobDefinitionId": null,
     "open": false,
     "deleted": false,
-    "resolved": true
+    "resolved": true,
+    "removalTime": "2018-02-10T14:33:19.000+0200",
+    "rootProcessInstanceId": "aRootProcessInstanceId"
   }
 ]
 ```

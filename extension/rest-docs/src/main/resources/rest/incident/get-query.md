@@ -14,7 +14,7 @@ menu:
 
 
 Queries for incidents that fulfill given parameters.
-The size of the result set can be retrieved by using the [Get Incident Count]({{< relref "reference/rest/incident/get-query-count.md" >}}) method.
+The size of the result set can be retrieved by using the [Get Incident Count]({{< ref "/reference/rest/incident/get-query-count.md" >}}) method.
 
 
 # Method
@@ -37,7 +37,7 @@ GET `/incident`
   </tr>
   <tr>
     <td>incidentType</td>
-    <td>Restricts to incidents that belong to the given incident type. See the <a href="{{< relref "user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
+    <td>Restricts to incidents that belong to the given incident type. See the <a href="{{< ref "/user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
   </tr>
   <tr>
     <td>incidentMessage</td>
@@ -46,6 +46,10 @@ GET `/incident`
   <tr>
     <td>processDefinitionId</td>
     <td>Restricts to incidents that belong to a process definition with the given id.</td>
+  </tr>
+  <tr>
+    <td>processDefinitionKeyIn</td>
+    <td>Restricts to incidents that belong to a process definition with the given keys. Must be a comma-separated list.</td>
   </tr>
   <tr>
     <td>processInstanceId</td>
@@ -60,6 +64,10 @@ GET `/incident`
     <td>Restricts to incidents that belong to an activity with the given id.</td>
   </tr>
   <tr>
+    <td>failedActivityId</td>
+    <td>Restricts to incidents that were created due to the failure of an activity with the given id.</td>
+  </tr>
+  <tr>
     <td>causeIncidentId</td>
     <td>Restricts to incidents that have the given incident id as cause incident.</td>
   </tr>
@@ -68,8 +76,8 @@ GET `/incident`
     <td>Restricts to incidents that have the given incident id as root cause incident.</td>
   </tr>
   <tr>
-    <td>context</td>
-    <td>Restricts to incidents that have the given parameter set as context.</td>
+    <td>configuration</td>
+    <td>Restricts to incidents that have the given parameter set as configuration.</td>
   </tr>
   <tr>
     <td>tenantIdIn</td>
@@ -82,7 +90,7 @@ GET `/incident`
   <tr>
     <td>sortBy</td>
     <td>Sort the results lexicographically by a given criterion. Valid values are
-    <code>incidentId</code>, <code>incidentTimestamp</code>, <code>incidentType</code>, <code>executionId</code>, <code>activityId</code>, <code>processInstanceId</code>, <code>processDefinitionId</code>, <code>causeIncidentId</code>, <code>rootCauseIncidentId</code>, <code>context</code> and <code>tenantId</code>.
+    <code>incidentId</code>, <code>incidentMessage</code>, <code>incidentTimestamp</code>, <code>incidentType</code>, <code>executionId</code>, <code>activityId</code>, <code>processInstanceId</code>, <code>processDefinitionId</code>, <code>causeIncidentId</code>, <code>rootCauseIncidentId</code>, <code>configuration</code> and <code>tenantId</code>.
     Must be used in conjunction with the <code>sortOrder</code> parameter.</td>
   </tr>
   <tr>
@@ -127,17 +135,22 @@ Each incident object has the following properties:
   <tr>
     <td>incidentTimestamp</td>
     <td>String</td>
-    <td>The time this incident happened. Has the format <code>yyyy-MM-dd'T'HH:mm:ss</code>.</td>
+    <td>The time this incident happened. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
   </tr>
   <tr>
     <td>incidentType</td>
     <td>String</td>
-    <td>The type of incident, for example: <code>failedJobs</code> will be returned in case of an incident which identified a failed job during the execution of a process instance. See the <a href="{{< relref "user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
+    <td>The type of incident, for example: <code>failedJobs</code> will be returned in case of an incident which identified a failed job during the execution of a process instance. See the <a href="{{< ref "/user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
   </tr>
   <tr>
     <td>activityId</td>
     <td>String</td>
     <td>The id of the activity this incident is associated with.</td>
+  </tr>
+  <tr>
+    <td>failedActivityId</td>
+    <td>String</td>
+    <td>The id of the activity on which the last exception occurred.</td>
   </tr>
   <tr>
     <td>causeIncidentId</td>
@@ -150,7 +163,7 @@ Each incident object has the following properties:
     <td>The id of the associated root cause incident which has been triggered.</td>
   </tr>
   <tr>
-    <td>context</td>
+    <td>configuration</td>
     <td>String</td>
     <td>The payload of this incident.</td>
   </tr>
@@ -171,6 +184,7 @@ Each incident object has the following properties:
   </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Response codes
 
@@ -188,7 +202,7 @@ Each incident object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -209,12 +223,13 @@ GET `/incident?processInstanceId=aProcInstId`
     "processDefinitionId": "aProcDefId",
     "processInstanceId": "aProcInstId",
     "executionId": "anExecutionId",
-    "incidentTimestamp": "2014-03-01T08:00:00",
+    "incidentTimestamp": "2014-03-01T08:00:00.000+0200",
     "incidentType": "failedJob",
     "activityId": "serviceTask",
+    "failedActivityId": "serviceTask",
     "causeIncidentId": "aCauseIncidentId",
     "rootCauseIncidentId": "aRootCauseIncidentId",
-    "context": "aConfiguration",
+    "configuration": "aConfiguration",
     "tenantId": null,
     "incidentMessage": "anIncidentMessage",
     "jobDefinitionId": "aJobDefinitionId"
@@ -224,12 +239,13 @@ GET `/incident?processInstanceId=aProcInstId`
     "processDefinitionId": "aProcDefId",
     "processInstanceId": "aProcInstId",
     "executionId": "anotherExecutionId",
-    "incidentTimestamp": "2014-03-01T09:00:00",
+    "incidentTimestamp": "2014-03-01T09:00:00.000+0200",
     "incidentType": "customIncidentType",
     "activityId": "userTask",
+    "failedActivityId": "userTask",
     "causeIncidentId": "anotherCauseIncidentId",
     "rootCauseIncidentId": "anotherRootCauseIncidentId",
-    "context": "anotherConfiguration",
+    "configuration": "anotherConfiguration",
     "tenantId": null,
     "incidentMessage": "anotherIncidentMessage",
     "jobDefinitionId": null

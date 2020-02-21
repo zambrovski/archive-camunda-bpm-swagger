@@ -99,7 +99,8 @@ If you are curious how it works, check out the `maven-plugin/generator/README.md
 
 * [Jan Galinski](https://github.com/jangalinski)
 * [Simon Zambrovski](https://github.com/zambrovski)
-* [Nils Ernsing](https://github.com/nernsting)
+* [Nils Ernsting](https://github.com/nernsting)
+* [Patrick Schalk](https://github.com/pschalk)
 
 
 ## License

@@ -12,12 +12,12 @@ menu:
 
 ---
 
-Restarts process instances that were canceled or terminated synchronously. To execute the restart asynchronously,
-use the [Restart Process Instance Async]({{< relref "reference/rest/process-definition/post-restart-process-instance-async.md" >}}) method.
+Restarts process instances that were canceled or terminated synchronously. Can also restart completed process instances. It will create a new instance using the original instance information. To execute the restart asynchronously,
+use the [Restart Process Instance Async]({{< ref "/reference/rest/process-definition/post-restart-process-instance-async.md" >}}) method.
 
 For more information about the difference between synchronous and
 asynchronous execution, please refer to the related
-section of the [user guide]({{< relref "user-guide/process-engine/process-instance-restart.md#execution" >}}).
+section of the [user guide]({{< ref "/user-guide/process-engine/process-instance-restart.md#execution" >}}).
 
 # Method
 
@@ -55,7 +55,7 @@ A JSON object with the following properties:
     <td>historicProcessInstanceQuery</td>
     <td>
       A historic process instance query like the request body described by
-      <a href="{{< relref "reference/rest/history/process-instance/post-process-instance-query.md#request-body" >}}">
+      <a href="{{< ref "/reference/rest/history/process-instance/post-process-instance-query.md#request-body" >}}">
         <code>POST /history/process-instance</code>
       </a>.
     </td>
@@ -66,7 +66,7 @@ A JSON object with the following properties:
   </tr>
   <tr>
     <td>skipIoMappings</td>
-    <td>Skip execution of <a href="{{< relref "user-guide/process-engine/variables.md#input-output-variable-mapping" >}}">input/output variable mappings</a> for activities that are started as part of this request.</td>
+    <td>Skip execution of <a href="{{< ref "/user-guide/process-engine/variables.md#input-output-variable-mapping" >}}">input/output variable mappings</a> for activities that are started as part of this request.</td>
   </tr>
    <tr>
     <td>initialVariables</td>
@@ -80,8 +80,12 @@ A JSON object with the following properties:
   <tr>
     <td>instructions</td>
     <td>
-        A JSON array of modification instructions. The instructions are executed in the order they are in. An instruction may have the following properties:
-      <table>
+        A JSON array of instructions. The instructions are executed in the order they are in. An instruction may have the following properties:
+      <table class="table table-striped">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
         <tr>
           <td>type</td>
           <td><b>Mandatory.</b> One of the following values: <code>startBeforeActivity</code>, <code>startAfterActivity</code>, <code>startTransition</code>. A <code>startBeforeActivity</code> instruction requests to enter a given activity. A <code>startAfterActivity</code> instruction requests to execute the single outgoing sequence flow of a given activity. A <code>startTransition</code> instruction requests to execute a specific sequence flow.</td>
@@ -123,7 +127,7 @@ This method returns no content.
     <td>400</td>
     <td>application/json</td>
     <td>
-      In case following parameters are missing: instructions, activityId or transitionId, processInstanceIds or historicProcessInstanceQuery, an exception of type <code>InvalidRequestException</code> is returned. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.
+      In case following parameters are missing: instructions, activityId or transitionId, processInstanceIds or historicProcessInstanceQuery, an exception of type <code>InvalidRequestException</code> is returned. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.
     </td>
   </tr>
 </table>
@@ -131,7 +135,9 @@ This method returns no content.
 
 # Example
 
-## Request
+## Restarting one or more Process Instances with known processInstanceIds:
+
+### Request
 
 POST `/process-definition/aProcessDefinitionId/restart`
 
@@ -151,6 +157,32 @@ Request Body:
   ],
   "initialVariables" : true,
   "skipCustomListeners" : true,
+  "withoutBusinessKey" : true
+}
+```
+
+### Response
+
+Status 204. No content.
+
+## Restarting one or more Process Instances using a historicProcessInstanceQuery:
+
+### Request
+
+POST `/process-definition/aProcessDefinitionId/restart`
+
+Request Body:
+
+```json
+{
+  "instructions": [
+    {
+      "type": "startAfterActivity",
+      "activityId": "aUserTask"
+    }
+  ],
+  "initialVariables" : true,
+  "skipCustomListeners" : true,
   "withoutBusinessKey" : true,
   "historicProcessInstanceQuery": {
     "processDefinitionId": "aProcessDefinitionId",
@@ -159,6 +191,7 @@ Request Body:
 }
 ```
 
-## Response
+### Response
 
 Status 204. No content.
+

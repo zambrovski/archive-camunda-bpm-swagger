@@ -14,7 +14,7 @@ menu:
 
 
 Queries for job definitions that fulfill given parameters.
-The size of the result set can be retrieved by using the [Get Job Definition Count]({{< relref "reference/rest/job-definition/get-query-count.md" >}}) method.
+The size of the result set can be retrieved by using the [Get Job Definition Count]({{< ref "/reference/rest/job-definition/get-query-count.md" >}}) method.
 
 
 # Method
@@ -49,11 +49,11 @@ GET `/job-definition`
   </tr>
   <tr>
     <td>jobType</td>
-    <td>Only include job definitions which exist for the given job type. See the <a href="{{< relref "user-guide/process-engine/the-job-executor.md#job-creation" >}}">User Guide</a> for more information about job types.</td>
+    <td>Only include job definitions which exist for the given job type. See the <a href="{{< ref "/user-guide/process-engine/the-job-executor.md#job-creation" >}}">User Guide</a> for more information about job types.</td>
   </tr>
   <tr>
     <td>jobConfiguration</td>
-    <td>Only include job definitions which exist for the given job context. For example: for timer jobs it is the timer context.</td>
+    <td>Only include job definitions which exist for the given job configuration. For example: for timer jobs it is the timer configuration.</td>
   </tr>
   <tr>
     <td>active</td>
@@ -89,6 +89,14 @@ GET `/job-definition`
     <td>sortOrder</td>
     <td>Sort the results in a given order. Values may be <code>asc</code> for ascending order or <code>desc</code> for descending order.
     Must be used in conjunction with the <code>sortBy</code> parameter.</td>
+  </tr>
+  <tr>
+    <td>firstResult</td>
+    <td>Pagination of results. Specifies the index of the first result to return.</td>
+  </tr>
+  <tr>
+    <td>maxResults</td>
+    <td>Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.</td>
   </tr>
 </table>
 
@@ -127,12 +135,12 @@ Each job definition object has the following properties:
   <tr>
     <td>jobType</td>
     <td>String</td>
-    <td>The type of the job which is running for this job definition. See the <a href="{{< relref "user-guide/process-engine/the-job-executor.md#job-creation" >}}">User Guide</a> for more information about job types.</td>
+    <td>The type of the job which is running for this job definition. See the <a href="{{< ref "/user-guide/process-engine/the-job-executor.md#job-creation" >}}">User Guide</a> for more information about job types.</td>
   </tr>
   <tr>
     <td>jobConfiguration</td>
     <td>String</td>
-    <td>The context of a job definition provides details about the jobs which will be created. For example: for timer jobs it is the timer context.</td>
+    <td>The configuration of a job definition provides details about the jobs which will be created. For example: for timer jobs it is the timer configuration.</td>
   </tr>
   <tr>
     <td>overridingJobPriority</td>
@@ -168,7 +176,7 @@ Each job definition object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 

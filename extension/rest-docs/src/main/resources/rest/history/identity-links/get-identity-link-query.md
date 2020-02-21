@@ -14,7 +14,7 @@ menu:
 
 
 Queries for historic identity link logs that fulfill given parameters.
-The size of the result set can be retrieved by using the [Get Identity-Link-Log Count]({{< relref "reference/rest/history/identity-links/get-identity-link-query-count.md" >}}) method.
+The size of the result set can be retrieved by using the [Get Identity-Link-Log Count]({{< ref "/reference/rest/history/identity-links/get-identity-link-query-count.md" >}}) method.
 
 
 # Method
@@ -76,6 +76,11 @@ GET `/history/identity-link-log`
     <td>Filter by a comma-separated list of tenant ids.</td>
   </tr>
   <tr>
+    <td>withoutTenantId</td>
+    <td>Only include historic identity links that belong to no tenant. Value may only be 
+    <code>true</code>, as <code>false</code> is the default behavior.</td>
+  </tr>
+  <tr>
     <td>sortBy</td>
     <td>Sort the results lexicographically by a given criterion. Valid values are
     <code>time</code>, <code>type</code>, <code>userId</code>, <code>groupId</code>, <code>taskId</code>, <code>processDefinitionId</code>, <code>processDefinitionKey</code>, <code>operationType</code>, <code>assignerId</code>, <code>tenantId</code>.
@@ -108,7 +113,7 @@ Each historic identity link log object has the following properties:
   <tr>
     <td>time</td>
     <td>String</td>
-    <td>The time when the identity link is logged. Has the format <code>yyyy-MM-dd'T'HH:mm:ss</code>.</td>
+    <td>The time when the identity link is logged. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
   </tr>
    <tr>
     <td>type</td>
@@ -155,8 +160,19 @@ Each historic identity link log object has the following properties:
     <td>String</td>
     <td>The id of the tenant.</td>
   </tr>
+  <tr>
+    <td>removalTime</td>
+    <td>String</td>
+    <td>The time after which the identity link should be removed by the History Cleanup job. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
+  </tr>
+  <tr>
+    <td>rootProcessInstanceId</td>
+    <td>String</td>
+    <td>The process instance id of the root process instance that initiated the process containing this identity link.</td>
+  </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Response Codes
 
@@ -174,7 +190,7 @@ Each historic identity link log object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -187,31 +203,37 @@ GET <code>/history/identity-link-log?taskId=aTaskId</code>
 
 ## Response
 
-    [
-      {
-	    "id": "1",
-        "time": "2014-03-01T08:00:00",
-        "type": "candidate",
-        "userId": "aUserId",
-        "groupId": "aGroupId",
-        "taskId": "aTaskId",
-		"processDefinitionId": "12",
-        "operationType": "add",
-        "assignerId": "aAssignerId",
-		"processDefinitionKey": "oneTaskProcess",
-		"tenantId": "tenant1"
-      },
-      {
-	    "id": "2",
-        "time": "2014-03-05T10:00:00",
-        "type": "candidate",
-        "userId": "aUserId",
-        "groupId": "aGroupId",
-        "taskId": "aTaskId",
-		"processDefinitionId": "12",
-        "operationType": "delete",
-        "assignerId": "aAssignerId"
-		"processDefinitionKey": "oneTaskProcess",
-		"tenantId": "tenant1"
-      }
-    ]
+```json
+[
+  {
+    "id": "1",
+    "time": "2014-03-01T08:00:00.000+0200",
+    "type": "candidate",
+    "userId": "aUserId",
+    "groupId": "aGroupId",
+    "taskId": "aTaskId",
+    "processDefinitionId": "12",
+    "operationType": "add",
+    "assignerId": "aAssignerId",
+    "processDefinitionKey": "oneTaskProcess",
+    "tenantId": "tenant1",
+    "removalTime":"2018-02-10T14:33:19.000+0200",
+    "rootProcessInstanceId": "aRootProcessInstanceId"
+  },
+  {
+    "id": "2",
+    "time": "2014-03-05T10:00:00.000+0200",
+    "type": "candidate",
+    "userId": "aUserId",
+    "groupId": "aGroupId",
+    "taskId": "aTaskId",
+    "processDefinitionId": "12",
+    "operationType": "delete",
+    "assignerId": "aAssignerId"
+    "processDefinitionKey": "oneTaskProcess",
+    "tenantId": "tenant1",
+    "removalTime":"2018-02-10T14:33:19.000+0200",
+    "rootProcessInstanceId": "aRootProcessInstanceId"
+  }
+]
+```

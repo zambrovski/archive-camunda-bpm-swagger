@@ -129,14 +129,26 @@ An object having the following properties:
   <tr>
     <td>userOperationId</td>
     <td>String</td>
-    <td>The id of user operation which links historic detail with <a href="{{< relref "reference/rest/history/user-operation-log/index.md" >}}">user operation log</a> entries.</td>
+    <td>The id of user operation which links historic detail with <a href="{{< ref "/reference/rest/history/user-operation-log/_index.md" >}}">user operation log</a> entries.</td>
   </tr>
   <tr>
     <td>time</td>
     <td>String</td>
-    <td>The time when this historic detail occurred, has the format <code>yyyy-MM-dd'T'HH:mm:ss</code>.</td>
+    <td>The time when this historic detail occurred, default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
+  </tr>
+  <tr>
+    <td>removalTime</td>
+    <td>String</td>
+    <td>The time after which the historic detail should be removed by the History Cleanup job. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
+  </tr>
+  <tr>
+    <td>rootProcessInstanceId</td>
+    <td>String</td>
+    <td>The process instance id of the root process instance that initiated the process containing this historic detail.</td>
   </tr>
 </table>
+
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 Depending on the type of the historic detail it contains further properties. In case of a <code>HistoricVariableUpdate</code> the following properties are also provided:
 
@@ -164,7 +176,7 @@ Depending on the type of the historic detail it contains further properties. In 
   <tr>
     <td>value</td>
     <td>String/Number/Boolean/Object</td>
-    <td>{{< rest-var-response deserializationParameter="deserializeValue" >}}</td>
+    <td>{{< rest-var-response-value deserializationParameter="deserializeValue" >}}</td>
   </tr>
   <tr>
     <td>valueInfo</td>
@@ -219,7 +231,7 @@ In case of an <code>HistoricFormField</code> the following properties are also p
   <tr>
     <td>404</td>
     <td>application/json</td>
-    <td>Variable with given id does not exist. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Variable with given id does not exist. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -250,13 +262,15 @@ Status 200.
   "taskId": null,
   "tenantId": null,
   "userOperationId": "3cd76c7f-001a-11e7-8c6b-34f39ab71d4e",
-  "time": "2017-03-03T15:03:54",
+  "time": "2017-03-03T15:03:54.000+0200",
   "variableName": "amount",
   "variableInstanceId": "3cd65b08-001a-11e7-8c6b-34f39ab71d4e",
   "variableType": "Double",
   "value": 30.0,
   "valueInfo": {},
   "revision": 0,
-  "errorMessage": null
+  "errorMessage": null,
+  "removalTime":"2018-02-10T14:33:19.000+0200",
+  "rootProcessInstanceId": "aRootProcessInstanceId"
 }
 ```

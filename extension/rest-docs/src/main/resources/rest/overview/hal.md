@@ -202,7 +202,7 @@ used:
 ```
 
 It is configured by the context parameter
-`org.camunda.bpm.engine.rest.hal.cache.config`. The context is provided
+`org.camunda.bpm.engine.rest.hal.cache.config`. The configuration is provided
 as JSON and consists of two properties:
 
 <table class="table table-striped">
@@ -223,7 +223,7 @@ as JSON and consists of two properties:
     <td>caches</td>
     <td>
       A JSON object to specify which HAL relations should be cached. Every HAL relation cache is configured
-      separately and identified by the HalResource class to cache. The possible context parameters
+      separately and identified by the HalResource class to cache. The possible configuration parameters
       depend on the cache implementation and have to be available as setters on the implementation class.
     </td>
   </tr>
@@ -231,7 +231,7 @@ as JSON and consists of two properties:
 
 ## DefaultHalResourceCache Configuration Options
 
-The simple default cache implementation `DefaultHalResourceCache` provides following context
+The simple default cache implementation `DefaultHalResourceCache` provides following configuration
 options:
 
 <table class="table table-striped">

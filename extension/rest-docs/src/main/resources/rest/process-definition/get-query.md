@@ -14,7 +14,7 @@ menu:
 
 
 Queries for process definitions that fulfill given parameters. Parameters may be the properties of process definitions, such as the name, key or version.
-The size of the result set can be retrieved by using the [Get Definition Count]({{< relref "reference/rest/process-definition/get-query-count.md" >}}) method.
+The size of the result set can be retrieved by using the [Get Definition Count]({{< ref "/reference/rest/process-definition/get-query-count.md" >}}) method.
 
 
 # Method
@@ -54,6 +54,10 @@ GET `/process-definition`
   <tr>
     <td>key</td>
     <td>Filter by process definition key, i.e., the id in the BPMN 2.0 XML. Exact match.</td>
+  </tr>
+  <tr>
+    <td>keysIn</td>
+    <td>Filter by process definition keys.</td>
   </tr>
   <tr>
     <td>keyLike</td>
@@ -101,7 +105,7 @@ GET `/process-definition`
   </tr>
   <tr>
     <td>incidentType</td>
-    <td>Filter by the incident type. See the <a href="{{< relref "user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
+    <td>Filter by the incident type. See the <a href="{{< ref "/user-guide/process-engine/incidents.md#incident-types" >}}">User Guide</a> for a list of incident types.</td>
   </tr>
   <tr>
     <td>incidentMessage</td>
@@ -130,6 +134,26 @@ GET `/process-definition`
   <tr>
     <td>versionTagLike</td>
     <td>Filter by the version tag that the parameter is a substring of.</td>
+  </tr>
+  <tr>
+    <td>withoutVersionTag</td>
+    <td>Only include process definitions without a <code>versionTag</code></td>
+  </tr>
+  <tr>
+    <td>startableInTasklist</td>
+    <td>Filter by process definitions which are startable in Tasklist.</td>
+  </tr>
+  <tr>
+    <td>notStartableInTasklist</td>
+    <td>Filter by process definitions which are not startable in Tasklist.</td>
+  </tr>
+  <tr>
+    <td>startablePermissionCheck</td>
+    <td>Filter by process definitions which the user is allowed to start in Tasklist. If the user doesn't have these permissions the result will be empty list.<br/>
+    The permissions are:<br/>
+        * CREATE permission for all Process instances<br/>
+        * CREATE_INSTANCE and READ permission on Process definition level<br/>
+    </td>
   </tr>
   <tr>
     <td>sortBy</td>
@@ -228,8 +252,13 @@ Each process definition object has the following properties:
   <tr>
       <td>historyTimeToLive</td>
       <td>Number</td>
-      <td>History time to live value of the process definition. Is used within <a href="{{< relref "user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
-    </tr>
+      <td>History time to live value of the process definition. Is used within <a href="{{< ref "/user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
+  </tr>
+  <tr>
+      <td>startableInTasklist</td>
+      <td>Boolean</td>
+      <td>A flag indicating whether the process definition is startable in Tasklist or not.</td>
+  </tr>
 </table>
 
 
@@ -249,7 +278,7 @@ Each process definition object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -277,7 +306,8 @@ GET `/process-definition?keyLike=invoice&sortBy=version&sortOrder=asc`
       "suspended": false,
       "tenantId": null,
       "versionTag": null,
-      "historyTimeToLive": 5
+      "historyTimeToLive": 5,
+      "startableInTasklist": true
     },
     {
       "id": "invoice:2:c3e1bd16-2046-11e7-8f94-34f39ab71d4e",
@@ -292,7 +322,8 @@ GET `/process-definition?keyLike=invoice&sortBy=version&sortOrder=asc`
       "suspended": false,
       "tenantId": null,
       "versionTag": null,
-      "historyTimeToLive": null
+      "historyTimeToLive": null,
+      "startableInTasklist": true
     }
   ]
 ```

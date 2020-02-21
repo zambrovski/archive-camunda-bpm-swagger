@@ -14,7 +14,7 @@ menu:
 
 
 Queries for historic case instances that fulfill the given parameters.  The size of the result set can
-be retrieved by using the [Get Historic Case Instance Count]({{< relref "reference/rest/history/case-instance/get-case-instance-query-count.md" >}}) method.
+be retrieved by using the [Get Historic Case Instance Count]({{< ref "/reference/rest/history/case-instance/get-case-instance-query-count.md" >}}) method.
 
 
 # Method
@@ -72,19 +72,19 @@ GET `/history/case-instance`
   </tr>
   <tr>
     <td>createdBefore</td>
-    <td>Restrict to instances that were created before the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were created before the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>createdAfter</td>
-    <td>Restrict to instances that were created after the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were created after the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>closedBefore</td>
-    <td>Restrict to instances that were closed before the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were closed before the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>closedAfter</td>
-    <td>Restrict to instances that were closed after the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were closed after the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>createdBy</td>
@@ -149,6 +149,14 @@ GET `/history/case-instance`
     </td>
   </tr>
   <tr>
+    <td>variableNamesIgnoreCase</td>
+    <td>Match all variable names provided in <code>variables</code> case-insensitively. If set to <code>true</code> <strong>variableName</strong> and <strong>variablename</strong> are treated as equal.</td>
+  </tr>
+  <tr>
+    <td>variableValuesIgnoreCase</td>
+    <td>Match all variable values provided in <code>variables</code> case-insensitively. If set to <code>true</code> <strong>variableValue</strong> and <strong>variablevalue</strong> are treated as equal.</td>
+  </tr>
+  <tr>
     <td>sortBy</td>
     <td>Sort the results by a given criterion. Valid values are
     <code>instanceId</code>, <code>definitionId</code>, <code>businessKey</code>, <code>createTime</code>, <code>closeTime</code>, <code>duration</code> and <code>tenantId</code>.
@@ -169,6 +177,7 @@ GET `/history/case-instance`
   </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Result
 
@@ -209,12 +218,12 @@ Each historic case instance object has the following properties:
   <tr>
     <td>createTime</td>
     <td>String</td>
-    <td>The time the instance was created. Has the format <code>yyyy-MM-dd'T'HH:mm:ss</code>.</td>
+    <td>The time the instance was created. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
   </tr>
   <tr>
     <td>closeTime</td>
     <td>String</td>
-    <td>The time the instance was closed. Has the format <code>yyyy-MM-dd'T'HH:mm:ss</code>.</td>
+    <td>The time the instance was closed. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
   </tr>
   <tr>
     <td>durationInMillis</td>
@@ -263,6 +272,7 @@ Each historic case instance object has the following properties:
   </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Response Codes
 
@@ -280,7 +290,7 @@ Each historic case instance object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -289,7 +299,7 @@ Each historic case instance object has the following properties:
 
 ## Request
 
-GET `/history/case-instance?closedAfter=2013-01-01T00:00:00&closedBefore=2013-04-01T23:59:59`
+GET `/history/case-instance?closedAfter=2013-01-01T00:00:00.000+0200&closedBefore=2013-04-01T23:59:59.000+0200`
 
 ## Response
 
@@ -299,8 +309,8 @@ GET `/history/case-instance?closedAfter=2013-01-01T00:00:00&closedBefore=2013-04
     "id": "aCaseInstId",
     "businessKey": "aKey",
     "caseDefinitionId": "aCaseDefId",
-    "createTime": "2013-03-23T13:42:43",
-    "closeTime": "2013-03-23T13:42:45",
+    "createTime": "2013-03-23T13:42:43.863+0200",
+    "closeTime": "2013-03-23T13:42:45.726+0200",
     "durationInMillis": 2000,
     "createUserId": "aStartUserId",
     "superCaseInstanceId": "aSuperCaseInstanceId",

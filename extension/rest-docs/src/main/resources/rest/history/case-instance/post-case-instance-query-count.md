@@ -14,7 +14,7 @@ menu:
 
 
 Queries for the number of historic case instances that fulfill the given parameters.
-This method takes the same message body as the [Get Historic Case Instances (POST)]({{< relref "reference/rest/history/case-instance/post-case-instance-query.md" >}}) method and therefore it is slightly more powerful than the [Get Historic Case Instance Count]({{< relref "reference/rest/history/case-instance/get-case-instance-query-count.md" >}}) method.
+This method takes the same message body as the [Get Historic Case Instances (POST)]({{< ref "/reference/rest/history/case-instance/post-case-instance-query.md" >}}) method and therefore it is slightly more powerful than the [Get Historic Case Instance Count]({{< ref "/reference/rest/history/case-instance/get-case-instance-query-count.md" >}}) method.
 
 
 # Method
@@ -74,19 +74,19 @@ A JSON object with the following properties:
   </tr>
   <tr>
     <td>createdBefore</td>
-    <td>Restrict to instances that were created before the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were created before the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>createdAfter</td>
-    <td>Restrict to instances that were created after the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were created after the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>closedBefore</td>
-    <td>Restrict to instances that were closed before the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were closed before the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>closedAfter</td>
-    <td>Restrict to instances that were closed after the given date. The date must have the format <code>yyyy-MM-dd'T'HH:mm:ss</code>, e.g., <code>2013-01-23T14:42:45</code>.</td>
+    <td>Restrict to instances that were closed after the given date. By default*, the date must have the format <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>, e.g., <code>2013-01-23T14:42:45.000+0200</code>.</td>
   </tr>
   <tr>
     <td>createdBy</td>
@@ -148,8 +148,17 @@ A JSON object with the following properties:
     <code>like</code>.<br/>
     </td>
   </tr>
+  <tr>
+    <td>variableNamesIgnoreCase</td>
+    <td>Match all variable names provided in <code>variables</code> case-insensitively. If set to <code>true</code> <strong>variableName</strong> and <strong>variablename</strong> are treated as equal.</td>
+  </tr>
+  <tr>
+    <td>variableValuesIgnoreCase</td>
+    <td>Match all variable values provided in <code>variables</code> case-insensitively. If set to <code>true</code> <strong>variableValue</strong> and <strong>variablevalue</strong> are treated as equal.</td>
+  </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Result
 
@@ -185,7 +194,7 @@ A JSON object that contains the count as the only property.
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -204,8 +213,8 @@ Request Body:
     "aCaseInstId",
     "anotherId"
   ],
-  "closedAfter": "2013-01-01T00:00:00",
-  "closedBefore": "2013-04-01T23:59:59"
+  "closedAfter": "2013-01-01T00:00:00.000+0200",
+  "closedBefore": "2013-04-01T23:59:59.000+0200"
 }
 ```
 

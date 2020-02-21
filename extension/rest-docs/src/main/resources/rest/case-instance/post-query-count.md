@@ -14,8 +14,8 @@ menu:
 
 
 Queries for the number of case instances that fulfill the given parameters.
-This method takes the same message body as the [Get Case Instance (POST)]({{< relref "reference/rest/case-instance/post-query.md" >}}) method
-and therefore it is slightly more powerful than the [Get Case Instance Count]({{< relref "reference/rest/case-instance/get-query-count.md" >}}) method.
+This method takes the same message body as the [Get Case Instance (POST)]({{< ref "/reference/rest/case-instance/post-query.md" >}}) method
+and therefore it is slightly more powerful than the [Get Case Instance Count]({{< ref "/reference/rest/case-instance/get-query-count.md" >}}) method.
 
 
 # Method
@@ -99,6 +99,14 @@ A JSON object with the following properties:
     </td>
   </tr>
   <tr>
+    <td>variableNamesIgnoreCase</td>
+    <td>Match all variable names provided in <code>variables</code> case-insensitively. If set to <code>true</code> <strong>variableName</strong> and <strong>variablename</strong> are treated as equal.</td>
+  </tr>
+  <tr>
+    <td>variableValuesIgnoreCase</td>
+    <td>Match all variable values provided in <code>variables</code> case-insensitively. If set to <code>true</code> <strong>variableValue</strong> and <strong>variablevalue</strong> are treated as equal.</td>
+  </tr>
+  <tr>
     <td>sortBy</td>
     <td>Sort the results lexicographically by a given criterion. Valid values are
     <code>caseInstanceId</code>, <code>caseDefinitionKey</code> and <code>caseDefinitionId</code>.
@@ -146,7 +154,7 @@ A JSON object that contains the count as the only property.
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if an invalid operator for variable comparison is used. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if an invalid operator for variable comparison is used. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 

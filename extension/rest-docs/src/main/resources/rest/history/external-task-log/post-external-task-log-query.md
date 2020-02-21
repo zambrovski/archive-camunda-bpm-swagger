@@ -14,7 +14,7 @@ menu:
 
 
 Queries for historic external task logs that fulfill the given parameters.
-This method is slightly more powerful than the [Get External Task Logs]({{< relref "reference/rest/history/external-task-log/get-external-task-log-query.md" >}}) method because it allows filtering by historic external task logs values of the different types `String`, `Number` or `Boolean`.
+This method is slightly more powerful than the [Get External Task Logs]({{< ref "/reference/rest/history/external-task-log/get-external-task-log-query.md" >}}) method because it allows filtering by historic external task logs values of the different types `String`, `Number` or `Boolean`.
 
 
 # Method
@@ -82,6 +82,11 @@ POST `/history/external-task-log`
     <td>Only include historic external task log entries which belong to one of the passed and comma-separated tenant ids.</td>
   </tr>
   <tr>
+    <td>withoutTenantId</td>
+    <td>Only include historic external task log entries that belong to no tenant. Value may only be 
+    <code>true</code>, as <code>false</code> is the default behavior.</td>
+  </tr>
+  <tr>
     <td>priorityLowerThanOrEquals</td>
     <td>Only include logs for which the associated external task had a priority lower than or equal to the given value. Value must be a valid <code>long</code> value.</td>
   </tr>
@@ -111,7 +116,11 @@ POST `/history/external-task-log`
       <p>
         A JSON array of criteria to sort the result by. Each element of the array is a JSON object that specifies one ordering. The position in the array identifies the rank of an ordering, i.e., whether it is primary, secondary, etc. The ordering objects have the following properties:
       </p>
-      <table>
+      <table class="table table-striped">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
         <tr>
           <td>sortBy</td>
           <td><b>Mandatory.</b> Sort the results by a given criterion. Valid values are <code>timestamp</code>, <code>taskId</code>, <code>topicName</code>, <code>workerId</code>, <code>retries</code>, <code>priority</code>, <code>activityId</code>, <code>activityInstanceId</code>, <code>executionId</code>, <code>processInstanceId</code>, <code>processDefinitionId</code>, <code>processDefinitionKey</code> and <code>tenantId</code>.
@@ -231,8 +240,19 @@ Each historic external task log object has the following properties:
     <td>boolean</td>
     <td>A flag indicating whether this log represents the deletion of the associated external task.</td>
   </tr>
+  <tr>
+    <td>removalTime</td>
+    <td>String</td>
+    <td>The time after which this log should be removed by the History Cleanup job. Default format* <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.</td>
+  </tr>
+  <tr>
+    <td>rootProcessInstanceId</td>
+    <td>String</td>
+    <td>The process instance id of the root process instance that initiated the process containing this log.</td>
+  </tr>
 </table>
 
+\* For further information, please see the <a href="{{< ref "/reference/rest/overview/date-format.md" >}}"> documentation</a>.
 
 # Response Codes
 
@@ -250,7 +270,7 @@ Each historic external task log object has the following properties:
   <tr>
     <td>400</td>
     <td>application/json</td>
-    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Returned if some of the query parameters are invalid, for example if a <code>sortOrder</code> parameter is supplied, but no <code>sortBy</code>. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -275,7 +295,7 @@ Request Body:
 [
 	{
 	  "id" : "someId",
-	  "timestamp" : "2017-01-15T15:22:20",
+	  "timestamp" : "2017-01-15T15:22:20.000+0200",
 	  "externalTaskId" : "anExternalTaskId",
 	  "topicName" : "aTopicName",
 	  "workerId" : "aWorkerId",
@@ -292,7 +312,9 @@ Request Body:
 	  "creationLog" : false,
 	  "failureLog" : true,
 	  "successLog" : false,
-	  "deletionLog" : false
+	  "deletionLog" : false,
+	  "removalTime":"2018-02-10T14:33:19.000+0200",
+	  "rootProcessInstanceId": "aRootProcessInstanceId"
 	}
 ]
 ```

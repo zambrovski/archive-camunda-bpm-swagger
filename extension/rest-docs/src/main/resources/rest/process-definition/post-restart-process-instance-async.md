@@ -12,12 +12,12 @@ menu:
 
 ---
 
-Restarts process instances that were canceled or terminated asynchronously. To execute the restart synchronously,
-use the [Restart Process Instance]({{< relref "reference/rest/process-definition/post-restart-process-instance-sync.md" >}}) method.
+Restarts process instances that were canceled or terminated asynchronously. Can also restart completed process instances. It will create a new instance using the original instance information. To execute the restart synchronously,
+use the [Restart Process Instance]({{< ref "/reference/rest/process-definition/post-restart-process-instance-sync.md" >}}) method.
 
 For more information about the difference between synchronous and
 asynchronous execution, please refer to the related
-section of the [user guide]({{< relref "user-guide/process-engine/process-instance-restart.md#execution" >}}).
+section of the [user guide]({{< ref "/user-guide/process-engine/process-instance-restart.md#execution" >}}).
 
 # Method
 
@@ -55,7 +55,7 @@ A JSON object with the following properties:
     <td>historicProcessInstanceQuery</td>
     <td>
       A historic process instance query like the request body described by
-      <a href="{{< relref "reference/rest/history/process-instance/post-process-instance-query.md#request-body" >}}">
+      <a href="{{< ref "/reference/rest/history/process-instance/post-process-instance-query.md#request-body" >}}">
         <code>POST /history/process-instance</code>
       </a>.
     </td>
@@ -66,7 +66,7 @@ A JSON object with the following properties:
   </tr>
   <tr>
     <td>skipIoMappings</td>
-    <td>Skip execution of <a href="{{< relref "user-guide/process-engine/variables.md#input-output-variable-mapping" >}}">input/output variable mappings</a> for activities that are started as part of this request.</td>
+    <td>Skip execution of <a href="{{< ref "/user-guide/process-engine/variables.md#input-output-variable-mapping" >}}">input/output variable mappings</a> for activities that are started as part of this request.</td>
   </tr>
    <tr>
     <td>initialVariables</td>
@@ -79,8 +79,12 @@ A JSON object with the following properties:
   <tr>
     <td>instructions</td>
     <td>
-        A JSON array of modification instructions. The instructions are executed in the order they are in. An instruction may have the following properties:
-      <table>
+        A JSON array of instructions. The instructions are executed in the order they are in. An instruction may have the following properties:
+      <table class="table table-striped">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
         <tr>
           <td>type</td>
           <td><b>Mandatory.</b> One of the following values: <code>startBeforeActivity</code>, <code>startAfterActivity</code>, <code>startTransition</code>. A <code>startBeforeActivity</code>  instruction requests to enter a given activity. A <code>startAfterActivity</code> instruction requests to execute the single outgoing sequence flow of a given activity. A <code>startTransition</code> instruction requests to execute a specific sequence flow.</td>
@@ -104,70 +108,7 @@ A JSON object with the following properties:
 A JSON object corresponding to the `Batch` interface in the engine. Its
 properties are as follows:
 
-<table class="table table-striped">
-  <tr>
-    <th>Name</th>
-    <th>Value</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>id</td>
-    <td>String</td>
-    <td>The id of the created batch.</td>
-  </tr>
-  <tr>
-    <td>type</td>
-    <td>String</td>
-    <td>The type of the created batch.</td>
-  </tr>
-  <tr>
-    <td>totalJobs</td>
-    <td>Number</td>
-    <td>
-      The total jobs of a batch is the number of batch execution jobs required to
-      complete the batch.
-    </td>
-  </tr>
-  <tr>
-    <td>batchJobsPerSeed</td>
-    <td>Number</td>
-    <td>
-      The number of batch execution jobs created per seed job invocation.
-      The batch seed job is invoked until it has created all batch execution jobs required by
-      the batch (see <code>totalJobs</code> property).
-    </td>
-  </tr>
-  <tr>
-    <td>invocationsPerBatchJob</td>
-    <td>Number</td>
-    <td>
-      Every batch execution job invokes the command executed by the batch
-      <code>invocationsPerBatchJob</code> times. E.g., for a restart of process instances
-      in batch this specifies the number of process instances which
-      are restarted per batch execution job.
-    </td>
-  </tr>
-  <tr>
-    <td>seedJobDefinitionId</td>
-    <td>String</td>
-    <td>The job definition id for the seed jobs of this batch.</td>
-  </tr>
-  <tr>
-    <td>monitorJobDefinitionId</td>
-    <td>String</td>
-    <td>The job definition id for the monitor jobs of this batch.</td>
-  </tr>
-  <tr>
-    <td>batchJobDefinitionId</td>
-    <td>String</td>
-    <td>The job definition id for the batch execution jobs of this batch.</td>
-  </tr>
-  <tr>
-    <td>tenantId</td>
-    <td>String</td>
-    <td>The tenant id of the batch.</td>
-  </tr>
-</table>
+{{< rest-batch-response >}}
 
 
 # Response codes
@@ -187,7 +128,7 @@ properties are as follows:
     <td>400</td>
     <td>application/json</td>
     <td>
-      In case following parameters are missing: instructions, activityId or transitionId, processInstanceIds or historicProcessInstanceQuery, an exception of type <code>InvalidRequestException</code> is returned. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.
+      In case following parameters are missing: instructions, activityId or transitionId, processInstanceIds or historicProcessInstanceQuery, an exception of type <code>InvalidRequestException</code> is returned. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.
     </td>
   </tr>
 </table>
@@ -195,7 +136,9 @@ properties are as follows:
 
 # Example
 
-## Request
+## Restarting one or more Process Instances with known processInstanceIds:
+
+### Request
 
 POST `/process-definition/aProcessDefinitionId/restart-async`
 
@@ -215,6 +158,46 @@ Request Body:
   ],
   "initialVariables" : true,
   "skipCustomListeners" : true,
+  "withoutBusinessKey" : true
+}
+```
+
+### Response
+
+Status 200.
+
+```json
+{
+  "id": "aBatchId",
+  "type": "aBatchType",
+  "totalJobs": 10,
+  "batchJobsPerSeed": 100,
+  "invocationsPerBatchJob": 1,
+  "seedJobDefinitionId": "aSeedJobDefinitionId",
+  "monitorJobDefinitionId": "aMonitorJobDefinitionId",
+  "batchJobDefinitionId": "aBatchJobDefinitionId",
+  "tenantId": "aTenantId"
+}
+```
+
+## Restarting one or more Process Instances using a historicProcessInstanceQuery:
+
+### Request
+
+POST `/process-definition/aProcessDefinitionId/restart-async`
+
+Request Body:
+
+```json
+{
+  "instructions": [
+    {
+      "type": "startAfterActivity",
+      "activityId": "aUserTask"
+    }
+  ],
+  "initialVariables" : true,
+  "skipCustomListeners" : true,
   "withoutBusinessKey" : true,
   "historicProcessInstanceQuery": {
     "processDefinitionId": "aProcessDefinitionId",
@@ -222,8 +205,7 @@ Request Body:
   }
 }
 ```
-
-## Response
+### Response
 
 Status 200.
 

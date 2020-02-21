@@ -14,7 +14,7 @@ menu:
 
 
 Queries for the number of historic external task logs that fulfill the given parameters.
-Takes the same parameters as the [Get External Task Logs]({{< relref "reference/rest/history/external-task-log/get-external-task-log-query.md" >}}) method.
+Takes the same parameters as the [Get External Task Logs]({{< ref "/reference/rest/history/external-task-log/get-external-task-log-query.md" >}}) method.
 
 
 # Method
@@ -80,6 +80,11 @@ GET `/history/external-task-log/count`
   <tr>
     <td>tenantIdIn</td>
     <td>Only include historic external task log entries which belong to one of the passed and comma-separated tenant ids.</td>
+  </tr>
+  <tr>
+    <td>withoutTenantId</td>
+    <td>Only include historic external task log entries that belong to no tenant. Value may only be 
+    <code>true</code>, as <code>false</code> is the default behavior.</td>
   </tr>
   <tr>
     <td>priorityLowerThanOrEquals</td>

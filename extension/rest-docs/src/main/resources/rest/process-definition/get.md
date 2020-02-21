@@ -125,8 +125,13 @@ Its properties are as follows:
     <tr>
       <td>historyTimeToLive</td>
       <td>Number</td>
-      <td>History time to live value of the process definition. Is used within <a href="{{< relref "user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
-    </tr>
+      <td>History time to live value of the process definition. Is used within <a href="{{< ref "/user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
+  </tr>
+  <tr>
+      <td>startableInTasklist</td>
+      <td>Boolean</td>
+      <td>A flag indicating whether the process definition is startable in Tasklist or not.</td>
+  </tr>
 </table>
 
 
@@ -146,7 +151,7 @@ Its properties are as follows:
   <tr>
     <td>404</td>
     <td>application/json</td>
-    <td>Process definition with given id or key does not exist. See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
+    <td>Process definition with given id or key does not exist. See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.</td>
   </tr>
 </table>
 
@@ -175,6 +180,7 @@ GET `/process-definition/key/invoice`
   "suspended":false,
   "tenantId":null,
   "versionTag":null,
-  "historyTimeToLive":5
+  "historyTimeToLive":5,
+  "startableInTasklist": true
 }
 ```

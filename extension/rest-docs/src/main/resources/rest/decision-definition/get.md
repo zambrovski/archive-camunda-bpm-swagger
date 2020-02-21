@@ -114,9 +114,14 @@ Its properties are as follows:
     <td>The tenant id of the decision definition.</td>
   </tr>
   <tr>
+    <td>versionTag</td>
+    <td>String</td>
+    <td>The version tag of the process definition.</td>
+  </tr>
+  <tr>
     <td>historyTimeToLive</td>
     <td>Number</td>
-    <td>History time to live value of the decision definition. Is used within <a href="{{< relref "user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
+    <td>History time to live value of the decision definition. Is used within <a href="{{< ref "/user-guide/process-engine/history.md#history-cleanup">}}">History cleanup</a>.</td>
   </tr>
 </table>
 
@@ -139,7 +144,7 @@ Its properties are as follows:
     <td>application/json</td>
     <td>
       Decision definition with given id or key does not exist.
-      See the <a href="{{< relref "reference/rest/overview/index.md#error-handling" >}}">Introduction</a> for the error response format.
+      See the <a href="{{< ref "/reference/rest/overview/_index.md#error-handling" >}}">Introduction</a> for the error response format.
     </td>
   </tr>
 </table>
@@ -167,6 +172,7 @@ GET `/decision-definition/key/aDecisionDefinitionKey`
   "decisionRequirementsDefinitionId":"dish:1:c633c195-41b7-11e6-b0ef-00aa004d0001",
   "decisionRequirementsDefinitionKey":"dish",
   "tenantId": null,
+  "versionTag":null,
   "historyTimeToLive": 5
 }
 ```
