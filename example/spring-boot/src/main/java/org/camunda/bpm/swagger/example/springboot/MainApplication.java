@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableProcessApplication
 public class MainApplication {
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     SpringApplication.run(MainApplication.class, args);
   }
 
@@ -22,15 +22,16 @@ public class MainApplication {
   WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
     return new WebMvcConfigurerAdapter() {
       @Override
-      public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/swagger", "/webjars/swagger-ui/3.1.4");
+      public void addViewControllers(final ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/swagger", "/webjars/swagger-ui/3.25.0/index.html?docExpansion=none&url=/swagger.json");
+        registry.addRedirectViewController("/swagger/", "/webjars/swagger-ui/3.25.0/index.html?docExpansion=none&url=/swagger.json");
         super.addViewControllers(registry);
       }
     };
   }
 
   @EventListener
-  public void run(PostDeployEvent event) {
+  public void run(final PostDeployEvent event) {
     event.getProcessEngine().getRepositoryService().createDeployment()
       .addModelInstance("dummy.bpmn", Bpmn.createExecutableProcess("dummy")
         .startEvent()

@@ -94,6 +94,9 @@ If you are curious how it works, check out the `maven-plugin/generator/README.md
 * [Issue Tracker](https://github.com/camunda/camunda-bpm-swagger/issues)
 * [Contributing](./CONTRIBUTING) 
 
+## How to update camunda version
+
+See [Click me](extension/rest-docs/README.md)
 
 ## Maintainer
 

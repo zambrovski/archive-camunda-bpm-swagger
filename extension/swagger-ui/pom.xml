@@ -13,12 +13,6 @@
 	<name>Camunda Swagger UI</name>
 	<packaging>war</packaging>
 
-  <properties>
-    <swagger.version>1.5.16</swagger.version>
-    <swagger-ui.version>3.1.4</swagger-ui.version>
-    <version.jersey2>2.25.1</version.jersey2>
-  </properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.webjars</groupId>
