@@ -25,6 +25,7 @@
     <camunda.version>7.8.0</camunda.version>
     <swagger.version>1.5.16</swagger.version>
     <version.jersey2>2.25.1</version.jersey2>
+    <lombok.version>1.18.12</lombok.version>
   </properties>
 
   <modules>
@@ -54,7 +55,7 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.16.16</version>
+        <version>${lombok.version}</version>
         <scope>provided</scope>
       </dependency>
 
