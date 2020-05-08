@@ -16,7 +16,7 @@ Swagger Support for Camunda BPM REST API.
 
 **Features:**
 
-* Provides a Swagger OpenSpec API documentation of Camunda BPM Engine REST.
+* Provides a Swagger OpenAPI Spec documentation of Camunda BPM Engine REST.
 * Provides Swagger UI archive which can be used to explore the API.
 * Supports Camunda BPM Engine 7.8
 
@@ -24,7 +24,7 @@ Swagger Support for Camunda BPM REST API.
 
 **How to use with Spring Boot**
 
-In order to use the Swagger in context of a Camunda SpringBoot application, just include 
+In order to use the Swagger in context of a Camunda Spring Boot application, just include 
 
     <dependency>
       <groupId>org.camunda.bpm.extension.swagger</groupId>
@@ -40,7 +40,7 @@ In order to use the Swagger in context of a Camunda SpringBoot application, just
 into your `pom.xml``.
 
 * swagger-ui-webjar - supplies the Swagger-UI application and allows access via /webjars/swagger-ui/<version>
-* camunda-swagger-json - contains the Camunda swagger.json, so its accesible on "/swagger.json"
+* camunda-swagger-json - contains the Camunda swagger.json, so its accessible on "/swagger.json"
 
 To use, run the main application and go to
 
@@ -57,7 +57,7 @@ This project produces a WAR artifact `swagger-ui.war` which can be obtained unde
       <type>war</type>
     </dependency>
 
-Please deploy it into the container with your Camunda ditribution (tested with Wildfly 10 Camunda distribution). To invoke the Swagger UI, 
+Please deploy it into the container with your Camunda distribution (tested with Wildfly 10 Camunda distribution). To invoke the Swagger UI, 
 call [http://localhost:8080/swagger/webjars/swagger-ui/3.1.4/index.html?docExpansion=none&url=/swagger/swagger.json](http://localhost:8080/swagger/webjars/swagger-ui/3.1.4/index.html?docExpansion=none&url=/swagger/swagger.json) 
 in your browser.
 
