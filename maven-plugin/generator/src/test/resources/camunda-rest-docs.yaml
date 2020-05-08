@@ -14093,11 +14093,11 @@ restOperations:
     firstName:
       id: "firstName"
       type: null
-      description: "Filter by the firstname of the user."
+      description: "Filter by the first name of the user."
     lastName:
       id: "lastName"
       type: null
-      description: "Filter by the lastname of the user."
+      description: "Filter by the last name of the user."
     memberOfGroup:
       id: "memberOfGroup"
       type: null
@@ -14105,7 +14105,7 @@ restOperations:
     firstNameLike:
       id: "firstNameLike"
       type: null
-      description: "Filter by the firstname that the parameter is a substring of."
+      description: "Filter by the first name that the parameter is a substring of."
     id:
       id: "id"
       type: null
@@ -14117,7 +14117,7 @@ restOperations:
     lastNameLike:
       id: "lastNameLike"
       type: null
-      description: "Filter by the lastname that the parameter is a substring of."
+      description: "Filter by the last name that the parameter is a substring of."
     email:
       id: "email"
       type: null
@@ -14147,11 +14147,11 @@ restOperations:
     lastName:
       id: "lastName"
       type: null
-      description: "Filter by the lastname of the user."
+      description: "Filter by the last name of the user."
     firstNameLike:
       id: "firstNameLike"
       type: null
-      description: "Filter by the firstname that the parameter is a substring of."
+      description: "Filter by the first name that the parameter is a substring of."
     firstResult:
       id: "firstResult"
       type: null
@@ -14168,7 +14168,7 @@ restOperations:
     firstName:
       id: "firstName"
       type: null
-      description: "Filter by the firstname of the user."
+      description: "Filter by the first name of the user."
     memberOfGroup:
       id: "memberOfGroup"
       type: null
@@ -14197,7 +14197,7 @@ restOperations:
     lastNameLike:
       id: "lastNameLike"
       type: null
-      description: "Filter by the lastname that the parameter is a substring of."
+      description: "Filter by the last name that the parameter is a substring of."
     email:
       id: "email"
       type: null
